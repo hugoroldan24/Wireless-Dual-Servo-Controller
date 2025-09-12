@@ -61,9 +61,9 @@ static volatile int8_t interrupt_count = 0;
  */
 ISR(TIMER0_COMPA_vect)
 {
-   if(++interrupt_count == 3){	    /* Every 15 ms (3 × 5 ms) */
+   if(++interrupt_count == 3){	/* Every 15 ms (3 × 5 ms) */
 	OCR1A = servos.sA;  	    /* Refresh OCR1A for servo A */
-	OCR1B = servos.sB;	    /* Refresh OCR1B for servo B */
+	OCR1B = servos.sB;	    	/* Refresh OCR1B for servo B */
 	interrupt_count = -1;	    /* Reset so next interrupt sets it to 0 */
    }
 }
@@ -83,11 +83,11 @@ void PWM_Init()
   servos.sB = IDLE_STATE; 
   
   PRR &= ~(1<<PRTIM1);        			   	   /* Activate Timer1 */
-  DDRB |= (1<<DD_OC1A) | (1<<DD_OC1B);     		   /* OC1A (PB1) and OC1B (PB2) as outputs */
+  DDRB |= (1<<DD_OC1A) | (1<<DD_OC1B);     	   /* OC1A (PB1) and OC1B (PB2) as outputs */
   TCNT1 = 0x0000;               			   /* Reset Timer1 counter */
-  TCCR1B |= (1 << WGM13) | (1 << WGM12); 		   /* Fast PWM mode 14: TOP = ICR1 */
-  TCCR1A |= (1 << COM1A1) | (1 << COM1B1) 	           /* Non-inverting mode on OC1A/OC1B (clear when matching upcounting and set when reaching bottom */
-  | (1 << WGM11);  					   /* Part of Fast PWM mode */
+  TCCR1B |= (1 << WGM13) | (1 << WGM12); 	   /* Fast PWM mode 14: TOP = ICR1 */
+  TCCR1A |= (1 << COM1A1) | (1 << COM1B1) 	   /* Non-inverting mode on OC1A/OC1B (clear when matching upcounting and set when reaching bottom */
+  | (1 << WGM11);  					   		   /* Part of Fast PWM mode */
   ICR1 = PWM_PERIOD;  	    			 	   
 }
 
@@ -102,12 +102,12 @@ void PWM_Init()
  */
 void PWM_Timer0_Init()
 {
-  PRR &= ~(1<<PRTIM0);                                       /* Activate Timer0 */
-  TCCR0A |=(1<<WGM01);                                       /* CTC mode */
-  TIMSK0 |= (1<<OCIE0A);				     /* Unmask Compare Match A interrupt */
-  TIFR0 |= (1<< OCF0A);					     /* Clear any pending interrupt flag */
-  TCNT0 = 0x00;						     /* Reset Timer0 counter */
-  OCR0A = TIMER0_PERIOD;         		     	     /* Set Compare value for 5 ms */
+  PRR &= ~(1<<PRTIM0);                    /* Activate Timer0 */
+  TCCR0A |=(1<<WGM01);                    /* CTC mode */
+  TIMSK0 |= (1<<OCIE0A);				  /* Unmask Compare Match A interrupt */
+  TIFR0 |= (1<< OCF0A);					  /* Clear any pending interrupt flag */
+  TCNT0 = 0x00;						      /* Reset Timer0 counter */
+  OCR0A = TIMER0_PERIOD;         		  /* Set Compare value for 5 ms */
 }
 
 
@@ -118,7 +118,7 @@ void PWM_Timer0_Init()
  */
 void PWM_Start()
 {
-   TCCR1B |=(1 << CS12); 			 /*Start PWM signal generation*/
+   TCCR1B |=(1 << CS12); 			 			 /*Start PWM signal generation*/
    TCCR0B = TCCR0B | (1 << CS02) | (1 << CS00);  /*Start the synchronisation Timer*/  
 }
 
