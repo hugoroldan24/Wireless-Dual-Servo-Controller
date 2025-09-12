@@ -185,7 +185,7 @@ Below is a detailed overview of the connections between the ATmega328P microcont
 
 ## 🎮 Controls
 
-Assuming you hold the joystick with its pin header facing you, the **X-axis** is vertical and the **Y-axis** is horizontal. Moving the stick toward an extreme both changes direction and increases speed—maximum speed is reached at the full deflection.
+Assuming you hold the joystick with its pin header facing you, the **X-axis** is vertical and the **Y-axis** is horizontal. Moving the stick toward an extreme both changes direction and increases speed.
 
 - **X-axis (vertical)**  
   - **Up** (X positive): Servo A rotates **clockwise**  
@@ -203,7 +203,7 @@ Assuming you hold the joystick with its pin header facing you, the **X-axis** is
   - **Down + Right** (X–, Y+): Servo A counter-clockwise, Servo B clockwise  
   - **Down + Left** (X–, Y–): Both servos rotate **counter-clockwise**  
 
-> 👉 **Tip:** The closer the joystick is to an extreme, the faster that servo will spin in the chosen direction. Full deflection = maximum speed.
+> 👉 The closer the joystick is to an extreme, the faster that servo will spin in the chosen direction. Full deflection = maximum speed.
 
 ---
 
