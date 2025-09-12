@@ -23,12 +23,12 @@
  *         7. Begin listening for incoming RF packets (pull CE high).
  */
 void receiver_config(){
-  sei(); 		/*Set Global Interruptions, from now, we can accept hardware interrupts*/
-  SPI_Init();		/*Initialice the SPI feature*/
-  PWM_Init();  		/*Initialice the PWM feature*/
-  PWM_Timer0_Init();	/*Initialice the Timer0*/ 
-  PWM_Start();		/*We start generating PWM signals*/
-  RF_Receiver_Init();   /*We initialice the RF module as a receiver*/
-  Radio_Listen();	/*We start listening for incoming packets*/
+  sei(); 		            /*Set Global Interruptions, from now, we can accept hardware interrupts*/
+  SPI_Init();		        /*Initialice the SPI feature*/
+  PWM_Init();  		      /*Initialice the PWM feature*/
+  PWM_Timer0_Init();  	/*Initialice the Timer0*/ 
+  PWM_Start();		       /*We start generating PWM signals*/
+  RF_Receiver_Init();  /*We initialice the RF module as a receiver*/
+  Radio_Listen();	     /*We start listening for incoming packets*/
 }
   				  
