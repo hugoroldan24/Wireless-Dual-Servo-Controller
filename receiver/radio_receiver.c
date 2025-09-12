@@ -142,29 +142,29 @@ void RF_Receiver_Init()
   
   /* Configure INT0 (PD2) for RF IRQ (active low) */
   DDRD &= ~(1 << DD_INT0);                  /* INT0 as input */
-  PORTD |= (1 << INT0_PIN);		    /* Enable pull-up on PD2 */
+  PORTD |= (1 << INT0_PIN);		               /* Enable pull-up on PD2 */
   EICRA |= (1 << ISC01);                    /* Trigger INT0 on falling edge */ 
-  EIFR |= (1 << INTF0);			    /* Clear any pending INT0 flag */
-  EIMSK |= (1 << INT0);  		    /* Unmask INT0 interrupt */
+  EIFR |= (1 << INTF0);			                  /* Clear any pending INT0 flag */
+  EIMSK |= (1 << INT0);  		                 /* Unmask INT0 interrupt */
   
-  DDRB |= (1<<DD_CE);		            /* Configure CE pin as output */
-  PORTB &= ~(1 << CE_PIN);		    /* Ensure CE = 0 */
+  DDRB |= (1<<DD_CE);		                     /* Configure CE pin as output */
+  PORTB &= ~(1 << CE_PIN);		                /* Ensure CE = 0 */
   
-  _delay_us(10300);			    		     /* Wait ~10.3 ms for power-down stabilization */
-  writeRegister(W_RF_CH,0x04);         	    		     /* Set RF channel to 2.404 GHz (avoid Wi-Fi) */	  
-  writeRegister(W_RF_SETUP,0x0F);	    	  	     /* 2 Mbps data rate, 0 dBm, enable LNA gain */ 
+  _delay_us(10300);			    		                /* Wait ~10.3 ms for power-down stabilization */
+  writeRegister(W_RF_CH,0x04);         	    /* Set RF channel to 2.404 GHz (avoid Wi-Fi) */	  
+  writeRegister(W_RF_SETUP,0x0F);	    	  	  /* 2 Mbps data rate, 0 dBm, enable LNA gain */ 
   writeRegister(W_SETUP_AW,0x03);	   		     /* Address width = 5 bytes */ 
-  writeRegister(W_EN_AA,0x00);	           		     /* Disable auto-acknowledgment on all pipes */
-  writeRegister(W_EN_RXADDR,0x01);	    		     /* Enable only pipe 0 */
-  writeRegister(W_RX_PW_P0,0x02);           		     /* Static payload length = 2 bytes on pipe 0 */
-  writeRegister(W_STATUS,(1<<6));          		     /* Clear RX_DS flag */  
-  writeAddress(W_RX_ADDR_P0,rx_pipe0_address,ADDRESS_WIDTH); /* Set pipe 0 address */
-  writeRegister(ACTIVATE,ACTIVATION_KEY);    		     /* Activate features (enable NO_ACK) */
-  writeRegister(W_FEATURE,0x01);	     		     /* Enable TX payload no-ACK feature */
-  writeRegister(W_CONFIG,0x3B);              		     /* PWR_UP=1, PRIM_RX=1, CRC enabled, mask interrupts */
-  _delay_us(1500);			    		     /* Power-up delay ~1.5 ms */
+  writeRegister(W_EN_AA,0x00);	           		/* Disable auto-acknowledgment on all pipes */
+  writeRegister(W_EN_RXADDR,0x01);	    		   /* Enable only pipe 0 */
+  writeRegister(W_RX_PW_P0,0x02);           /* Static payload length = 2 bytes on pipe 0 */
+  writeRegister(W_STATUS,(1<<6));          	/* Clear RX_DS flag */  
+  writeAddress(W_RX_ADDR_P0,rx_pipe0_address,ADDRESS_WIDTH);  /* Set pipe 0 address */
+  writeRegister(ACTIVATE,ACTIVATION_KEY);    		               /* Activate features (enable NO_ACK) */
+  writeRegister(W_FEATURE,0x01);	     		                      /* Enable TX payload no-ACK feature */
+  writeRegister(W_CONFIG,0x3B);                       		      /* PWR_UP=1, PRIM_RX=1, CRC enabled, mask interrupts */
+  _delay_us(1500);			    		                                   /* Power-up delay ~1.5 ms */
 
-  sendCommand(FLUSH_RX);		    		     /* Flush RX FIFO */
+  sendCommand(FLUSH_RX);		    		                              /* Flush RX FIFO */
  }
  
  
@@ -186,9 +186,9 @@ void RF_Receiver_Init()
  */
  void get_Received_Data(JoystickData *joystick)
  {
-   PORTD &= ~(1 << SS_PIN);        	     /* Pull CSN low to begin SPI transaction */
-   SPI_Send_Data(R_RX_PAYLOAD);    	     /* Send command to read RX FIFO */							  
+   PORTD &= ~(1 << SS_PIN);        	         /* Pull CSN low to begin SPI transaction */
+   SPI_Send_Data(R_RX_PAYLOAD);    	         /* Send command to read RX FIFO */							  
    SPI_Receive_Data(NOP,&joystick->x_axis);  /* Read first byte (joystick X) */
    SPI_Receive_Data(NOP,&joystick->y_axis);  /* Read second byte (joystick Y) */
-   PORTD |= (1 << SS_PIN);         	     /* Release CSN */
+   PORTD |= (1 << SS_PIN);         	         /* Release CSN */
  }
