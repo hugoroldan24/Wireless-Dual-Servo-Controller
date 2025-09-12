@@ -100,7 +100,7 @@ void ADC_Init()
     ADMUX |= (1<< ADLAR);                                                           /* Left adjust result for 8-bit precision (ADCH) */
     ADCSRB = ADCSRB  |  ((1<<ADTS2) | (1<<ADTS0));                                  /* Auto-trigger source = Timer1 Compare Match B */
     ADCSRA |= (1<<ADATE);                                                           /* Enable auto-triggering */
-    ADMUX = (ADMUX & ~ADMUX_MUX) | channel;			                    /* Select initial channel 0 */    
+    ADMUX = (ADMUX & ~ADMUX_MUX) | channel;			                    			/* Select initial channel 0 */    
     /* With auto-trigger enabled, conversions start on each Timer1 Compare Match B event */
 }
 
@@ -113,13 +113,13 @@ void ADC_Init()
  */
 void Autotrigger_Init()
 { 
-   PRR &= ~(1<<PRTIM1);        		          /* Disable Timer1 power reduction */
-   TCNT1 = 0x0000;               		  /* Reset Timer1 counter */
-   TIMSK1 |= (1 << OCIE1B);    			  /* Enable Timer1 Compare Match B interrupt */
-   TCCR1B = TCCR1B | (1<< WGM12) | (1<<WGM13);    /* Configure Timer1 in CTC mode where TOP = ICR1 */ 	 
-   ICR1 = AUTO_TRIGGER_PERIOD;  		  /* Set Compare value for ~3 ms period */
-   OCR1B = ICR1;              		  	  /* Match OCR1B at TOP to trigger ISR */
-   TIFR1 |= (1 << OCF1B);	   		  /* Clear any pending Compare Match B flag */		 	
+   PRR &= ~(1<<PRTIM1);        		           /* Disable Timer1 power reduction */
+   TCNT1 = 0x0000;               		  	   /* Reset Timer1 counter */
+   TIMSK1 |= (1 << OCIE1B);    				   /* Enable Timer1 Compare Match B interrupt */
+   TCCR1B = TCCR1B | (1<< WGM12) | (1<<WGM13); /* Configure Timer1 in CTC mode where TOP = ICR1 */ 	 
+   ICR1 = AUTO_TRIGGER_PERIOD;  			   /* Set Compare value for ~3 ms period */
+   OCR1B = ICR1;              		  	 	   /* Match OCR1B at TOP to trigger ISR */
+   TIFR1 |= (1 << OCF1B);	   				   /* Clear any pending Compare Match B flag */		 	
 }
 
 
