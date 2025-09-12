@@ -39,20 +39,20 @@
  */
 int main(void)
 {
-  JoystickData joystick;     /* Declares the union joystick (defined in common.h file) */
+  JoystickData joystick;    				 /* Declares the union joystick (defined in common.h file) */
   
   receiver_config(); 				          /* Initialize SPI, PWM timers, RF receiver, and enable listening */
   while(1){
   
-     while(!availableData);				  /* Wait until nRF24L01+ external interrupt sets availableData */
+     while(!availableData);					  /* Wait until nRF24L01+ external interrupt sets availableData */
      
-     availableData = 0;  				  /* Reset flag */
+     availableData = 0;  				 	  /* Reset flag */
      
-     writeRegister(W_STATUS,(1<<RX_DS));    		  /* Clear RX_DS flag on nRF24L01+ */
+     writeRegister(W_STATUS,(1<<RX_DS));      /* Clear RX_DS flag on nRF24L01+ */
      
      get_Received_Data(&joystick); 			  /* Read two bytes from RX_FIFO and saves it in the joystick variable */ 
      
-     Convert_Value_PWM(joystick);   			  /* Converts raw X/Y joystick values into OCR1A/B pulse widths using linear interpolation */
+     Convert_Value_PWM(joystick);   		  /* Converts raw X/Y joystick values into OCR1A/B pulse widths using linear interpolation */
      
      /* Servo pulse widths are updated in TIMER0_COMPA_vect ISR on next sync */
    }
