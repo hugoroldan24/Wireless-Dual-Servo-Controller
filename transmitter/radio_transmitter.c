@@ -114,21 +114,21 @@ void RF_Transmitter_Init()
   uint8_t tx_address[] = {0xE7,0xE7,0xE7,0xE7,0xE7};
   
   DDRB |= (1 << DD_CE);		          		/* Configure CE pin as output */
-  PORTB &= ~(1 << CE_PIN); 		  		/* Ensure CE = 0 */
+  PORTB &= ~(1 << CE_PIN); 		  		       /* Ensure CE = 0 */
   
-  _delay_us(10300); 					/* Wait ~10.3 ms for power-down stabilization */
+  _delay_us(10300); 					       /* Wait ~10.3 ms for power-down stabilization */
   writeRegister(W_RF_CH,0x04);         	        	/* Set RF channel to 2.404 GHz (avoid Wi-Fi) */          	    
-  writeRegister(W_RF_SETUP,0x0F);			/* 2 Mbps data rate, 0 dBm, enable LNA gain */
-  writeRegister(W_SETUP_AW,0x03);			/* Address width = 5 bytes */
-  writeRegister(W_SETUP_RETR,0x00);	       	        /* Disable auto-retransmit */
+  writeRegister(W_RF_SETUP,0x0F);			       /* 2 Mbps data rate, 0 dBm, enable LNA gain */
+  writeRegister(W_SETUP_AW,0x03);			       /* Address width = 5 bytes */
+  writeRegister(W_SETUP_RETR,0x00);	       	/* Disable auto-retransmit */
   writeRegister(W_STATUS,0x3E);				/* Clear TX_DS and MAX_RT flags */
   writeRegister(W_EN_AA,0x00);				/* Disable auto-acknowledgment on all pipes */
   writeAddress(W_TX_ADDR,tx_address,ADDRESS_WIDTH); 	/* Set TX address */   
-  writeRegister(ACTIVATE,ACTIVATION_KEY); 	        /* Activate features (enable TX_NO_ACK) */
-  writeRegister(W_FEATURE,0x01);	 		/* Enable TX payload no-ACK feature */
-  writeRegister(W_CONFIG,0x5A); 	 		/* PWR_UP=1, PRIM_RX=0, enable CRC, mask interrupts */
-  _delay_us(1500);                           	        /* Power-up delay (~1.5 ms) */  
- 						        /* After configuration, module is in Standby-I until CE=1 */
+  writeRegister(ACTIVATE,ACTIVATION_KEY); 	       /* Activate features (enable TX_NO_ACK) */
+  writeRegister(W_FEATURE,0x01);	 		       /* Enable TX payload no-ACK feature */
+  writeRegister(W_CONFIG,0x5A); 	 		       /* PWR_UP=1, PRIM_RX=0, enable CRC, mask interrupts */
+  _delay_us(1500);                           	       /* Power-up delay (~1.5 ms) */  
+ 						              /* After configuration, module is in Standby-I until CE=1 */
   sendCommand(FLUSH_TX);                      		/* Flush TX FIFO */
 }
   
@@ -140,15 +140,15 @@ void RF_Transmitter_Init()
  */
 void sendPaquet(JoystickData joystick)
 {
-   PORTD &= ~(1 << SS_PIN);            	/* Chip Select ON */
+   PORTD &= ~(1 << SS_PIN);        /* Chip Select ON */
    
    SPI_Send_Data(W_TX_NO_ACK);   	/* Write payload in TX FIFO without ACK */   	         	       
    SPI_Send_Data(joystick.x_axis);	/* Send joystick x_axis data */
    SPI_Send_Data(joystick.y_axis);	/* Send joystick y_axis data */
    
-   PORTD |= (1 << SS_PIN); 	        /* Chip Select OFF */ 
+   PORTD |= (1 << SS_PIN); 	       /* Chip Select OFF */ 
    
-   PORTB |= (1 << CE_PIN);              /* Set CE HIGH to transmit */
+   PORTB |= (1 << CE_PIN);         /* Set CE HIGH to transmit */
    _delay_us(15);			/* 15 µs CE pulse to trigger TX */
-   PORTB &= ~(1 << CE_PIN); 		/* Set CE LOW to return to Standby-I after packet is transmitted */               	 	
+   PORTB &= ~(1 << CE_PIN);        /* Set CE LOW to return to Standby-I after packet is transmitted */               	 	
 }  
