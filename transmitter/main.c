@@ -43,9 +43,9 @@
 int main(void)
 {
   int8_t lastChannel;
-  JoystickData joystick;	    /* Declares the union that contains the joystick data (defined in common.h file) */
+  JoystickData joystick;	           /* Declares the union that contains the joystick data (defined in common.h file) */
   
-  transmitter_config();	   	    /* Initialices all the transmitter features*/
+  transmitter_config();	   	        /* Initialices all the transmitter features*/
   while(1){				       
      while(!sendData);              /* Wait until an ADC conversion is complete */
      sendData = 0;
@@ -54,7 +54,7 @@ int main(void)
      joystick.axis[lastChannel] = readADC();  /* Save the converted value in the axis array at the lastChannel index */
     
      if(lastChannel == NUM_ELEMENTS-1){
-        sendPaquet(joystick);    	     /* Sends the joystick union containing the converted data from both axis */  
+        sendPaquet(joystick);    	           /* Sends the joystick union containing the converted data from both axis */  
      }
      
   }  
