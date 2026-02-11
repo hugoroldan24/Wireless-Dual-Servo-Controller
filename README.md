@@ -11,7 +11,8 @@ Below is a summary of the skills I gained during the project:
 - **RF link configuration** and power-up sequencing per nRF24L01 datasheet  
 - **Datasheet interpretation**, extracting register settings and timing constraints
 
-You can find a demo of the project on my YouTube channel: https://www.youtube.com/watch?v=iMhhqYh_cts 
+You can find a demo of the project on my [YouTube channel](https://www.youtube.com/watch?v=iMhhqYh_cts).
+
 ---
 
 ## 📑 Table of Contents
