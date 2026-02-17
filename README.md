@@ -25,7 +25,6 @@ Below is a summary of the skills I gained during the project:
 - [⚡ Getting Started](#-getting-started)
 - [🎥 Video Demo](#-video-demo) 
 - [📚 References](#-references)
-- 
 
 ---
 
